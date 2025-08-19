@@ -4,6 +4,7 @@
     <div class="flex min-h-screen justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
         <div class="w-full max-w-md space-y-8">
             <div>
+                <img src="{{ asset('logo.png') }}" alt="Logo" class="mx-auto h-16 w-auto">
                 <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Investor Login</h2>
                 <p class="mt-2 text-center text-sm text-gray-600">Sign in to your account</p>
             </div>
@@ -31,7 +32,7 @@
                         class="appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
                 </div>
                 <div>
-                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded bg-blue-600 text-white font-bold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded bg-amber-500 text-white font-bold hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500">
                         Login
                     </button>
                 </div>
