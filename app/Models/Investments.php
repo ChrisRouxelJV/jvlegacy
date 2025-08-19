@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Investments extends Model
 {
     protected $connection = 'legacy'; // use the legacy DB
-    protected $table = 'Project_investments';
+    protected $table = 'project_investments';
 
     public $timestamps = false; // assuming no created_at/updated_at
 
