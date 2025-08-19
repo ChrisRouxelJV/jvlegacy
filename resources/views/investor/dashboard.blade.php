@@ -7,9 +7,11 @@
 
         <p class="text-gray-700 mb-4">Here’s your investor dashboard. From here, you’ll be able to view your investment history and download documents related to your projects.</p>
 
-        <div class="border-t pt-4 mt-6 text-sm text-gray-500">
-            Account ID: {{ $account->id }}<br>
-            Type: {{ $account->type_name ?? 'N/A' }}
+        <div class="mb-6 bg-yellow-100 border-l-4 border-yellow-400 p-4 rounded-xl">
+            <div class="text-yellow-800 font-semibold mb-1">Notice</div>
+            <div class="text-yellow-700 text-sm">
+                Viewing documents online is currently unavailable. Please bear with us as we work to fix the issue.
+            </div>
         </div>
 
         <h2 class="text-3xl mb-8">Your Investments</h2>
@@ -48,7 +50,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                     {{ $inv->type_label }}
                                 </td>
-                                <td class="px-6 py-4 w-16 whitespace-nowrap text-sm text-blue-600 underline">
+                                <td class="px-6 py-4 w-16 whitespace-nowrap text-sm text-stone-300 underline">
                                     <div class="flex flex-row">
                                         <a href="#">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
