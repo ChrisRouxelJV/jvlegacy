@@ -45,8 +45,8 @@
         </form>
         <div class="w-full md:w-auto mt-2 md:mt-6">
             <a href="{{ route('admin.investments.export', request()->query()) }}"
-               class="inline-block h-10 px-4 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm flex items-center justify-center">
-                ⬇️ Export CSV
+               class="inline-block p-3 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-1">
+                Export CSV
             </a>
         </div>
 
