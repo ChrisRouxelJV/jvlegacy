@@ -14,7 +14,7 @@ use Livewire\Volt\Volt;
 
 
 Route::get('/', function () {
-    return redirect()->route('investor/login');
+    return redirect()->route('investor.login');
 })->name('home');
 
 Route::get('/login', function () {
