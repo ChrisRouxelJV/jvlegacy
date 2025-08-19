@@ -6,6 +6,12 @@
 
     @vite('resources/css/app.css')
 
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
 </head>
 <body class="bg-gray-100 text-sm text-gray-900">
 @if (session()->has('masquerading_as'))
@@ -19,7 +25,10 @@
 @endif
 <header class="bg-white shadow p-4 mb-6">
     <div class="max-w-6xl mx-auto flex flex-row justify-between">
-        <h1 class="text-xl font-semibold">Dashboard</h1>
+                <div class="flex flex-row">
+            <img src="{{asset('logo.png')}}" alt="Logo" class="h-8 mr-2">
+            <h1 class="text-xl font-semibold">Dashboard</h1>
+        </div>
 
         <nav class="flex flex-row gap-4">
             <form action="{{ route('investor.logout') }}" method="POST" class="inline-block">

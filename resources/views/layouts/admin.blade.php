@@ -6,11 +6,20 @@
 
     @vite('resources/css/app.css')
 
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
 </head>
 <body class="bg-gray-100 text-sm text-gray-900">
 <header class="bg-white shadow p-4 mb-6">
     <div class="max-w-6xl mx-auto flex flex-row justify-between">
-        <h1 class="text-xl font-semibold">JaeVee System</h1>
+        <div class="flex flex-row">
+            <img src="{{asset('logo.png')}}" alt="Logo" class="h-8 mr-2">
+            <h1 class="text-xl font-semibold">JaeVee System</h1>
+        </div>
         @php
             $account = Auth::user();
         @endphp
@@ -46,5 +55,6 @@
 <main class="max-w-6xl mx-auto px-4">
     @yield('content')
 </main>
+@stack('scripts')
 </body>
 </html>

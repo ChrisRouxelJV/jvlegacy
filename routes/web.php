@@ -31,6 +31,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth:investor')->group(funct
     Route::get('/investments/export', [InvestmentController::class, 'export'])->name('investments.export');
 
     Route::get('/updates', [UpdateController::class, 'index'])->name('updates.index');
+    Route::post('/updates', [UpdateController::class, 'store'])->name('updates.store');
 
     Route::get('/accounts', [AccountController::class, 'index'])->name('accounts.index');
     Route::get('/accounts/{id}', [AccountController::class, 'show'])->name('accounts.show');

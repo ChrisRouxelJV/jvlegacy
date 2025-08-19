@@ -6,7 +6,58 @@
 @section('content')
     <h2 class="text-xl font-bold mb-4">Project Updates</h2>
 
+    <!-- New Update Form -->
     <div class="bg-white p-4 rounded shadow mb-6">
+        <h1 class="text-xl font-bold mb-4">Post an update</h1>
+        <form method="POST" action="{{ route('admin.updates.store') }}" id="update-form" class="mb-6 space-y-4">
+            @csrf
+            <div class="flex flex-wrap gap-4">
+                <div class="w-full md:w-1/2">
+                    <label class="block text-sm font-medium mb-1">Project <span class="text-red-500">*</span></label>
+                    <select name="project_id" class="w-full px-3 py-2 border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 rounded-md" required>
+                        <option value="" hidden>Select Project</option>
+                        @foreach ($projects as $proj)
+                            @if ($proj->project_id)
+                                <option value="{{ $proj->project_id }}">{{ $proj->project_id }} – {{ $proj->name }}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
+                <div class="w-full md:w-1/2">
+                    <input type="number" hidden name="category" value="3" class="w-full px-3 py-2 border border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 rounded-md">
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">Update Content <span class="text-red-500">*</span></label>
+                <div id="quill-editor" class="bg-white border border-gray-300 rounded" style="min-height: 150px;"></div>
+                <input type="hidden" name="comment" id="comment-input">
+            </div>
+            <div>
+                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Post Update</button>
+            </div>
+        </form>
+
+    </div>
+
+    @push('scripts')
+    <!-- Quill.js CDN -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var quill = new Quill('#quill-editor', {
+                theme: 'snow',
+                placeholder: 'Write your project update here...'
+            });
+            var form = document.getElementById('update-form');
+            form.addEventListener('submit', function (e) {
+                document.getElementById('comment-input').value = quill.root.innerHTML;
+            });
+        });
+    </script>
+    @endpush
+
+    <div>
         <form method="GET" class="mb-4 flex flex-wrap gap-4 items-end">
 
             <div class="w-full md:w-48">
@@ -34,11 +85,6 @@
             </div>
 
         </form>
-        <div class="w-full md:w-auto mt-2 md:mt-6">
-            <a href="#" class="inline-block h-10 px-4 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm flex items-center justify-center">
-                ⬇️ Export CSV
-            </a>
-        </div>
     </div>
 
     <div class="mt-4">
