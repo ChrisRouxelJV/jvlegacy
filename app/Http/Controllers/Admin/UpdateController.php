@@ -87,9 +87,6 @@ class UpdateController extends Controller
         // Also need to send to Ben and Scott
         $emails = array_merge($emails, ['ben@rise-capital.uk', 'scott@rise-capital.uk']);
 
-        dd($emails);
-
-
         foreach ($emails as $email) {
             Mail::send('emails.project_update', $mailData, function ($message) use ($email) {
                 $message->to($email)
