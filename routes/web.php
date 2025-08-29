@@ -56,6 +56,14 @@ Route::prefix('admin')->name('admin.')->middleware('auth:investor')->group(funct
     Auth::guard('investor')->logout();
     return redirect()->route('investor.login')->with('status', 'Logged out from masquerade');
     })->name('investor.stopMasquerade');
+
+    // Bulk email
+    Route::get('/updates/{id}/bulk-email', [UpdateController::class, 'bulkEmailPreflight'])->name('updates.bulk_email_preflight');
+    Route::post('/updates/{id}/bulk-email', [UpdateController::class, 'sendBulkEmails'])->name('updates.bulk_email');
+
+    // Selective Email
+    Route::post('/updates/{update}/selective-email', [UpdateController::class, 'sendSelectiveEmails'])->name('updates.selective_email');
+
 });
 
 Route::prefix('investor')->name('investor.')->group(function () {

@@ -56,7 +56,20 @@ class UpdateController extends Controller
         $update->sent_on = now();
         $update->save();
 
-        // Get all unique investor emails for this project
+        $this->sendBulkEmails($update);
+
+        // Count emails sent (excluding Ben and Scott)
+        $emailcount = count($emails) - 2;
+
+        return redirect()->route('admin.updates.index')
+            ->with('success', 'Update posted and ' . $emailcount . ' investors notified.');
+    }
+
+    // Separate function for sending bulk emails
+    public function sendBulkEmails($id)
+    {
+        $update = Update::findOrFail($id);
+
         $investorAccounts = Investments::where('project_id', $update->project_id)
             ->with('account')
             ->get()
@@ -66,29 +79,74 @@ class UpdateController extends Controller
 
         $emails = $investorAccounts->pluck('email')->filter()->all();
 
-        //dd($emails);
-
-
         // Prepare email data
         $mailData = [
             'content' => $update->comment,
             'url' => url('/investor/dashboard'),
         ];
+        // Also need to send to Ben and Scott
+        $emails = array_merge($emails, ['ben@rise-capital.uk', 'scott@rise-capital.uk']);
 
-        // Only send to first email if local, else send to all
-        if (app()->environment('local')) {
-            $emails = array_slice($emails, 0, 1);
-        }
+        dd($emails);
+
 
         foreach ($emails as $email) {
-            Mail::send('emails.project_update', $mailData, function ($message) use ($email, $update) {
+            Mail::send('emails.project_update', $mailData, function ($message) use ($email) {
                 $message->to($email)
                     ->subject('New Project Update');
             });
         }
 
+        // Count emails sent (excluding Ben and Scott)
+        $emailcount = count($emails) - 2;
+
         return redirect()->route('admin.updates.index')
-            ->with('success', 'Update posted and investors notified.');
+            ->with('success', $emailcount . ' investors notified.');
+    }
+
+    // Function to send update email to just Ben, Scott and Chris
+
+    public function sendSelectiveEmails(Update $update)
+    {
+
+        $mailData = [
+            'content' => $update->comment,
+            'url' => url('/investor/dashboard'),
+        ];
+
+        // Only send to Ben, Scott and Chris
+        $emails = ['ben@rise-capital.uk', 'scott@rise-capital.uk', 'chris@jaevee.co.uk'];
+
+        // if we are local, only send to chris
+        if (app()->environment('local')) {
+            $emails = ['chris@jaevee.co.uk'];
+        }
+
+        foreach ($emails as $email) {
+            Mail::send('emails.project_update', $mailData, function ($message) use ($email) {
+                $message->to($email)
+                    ->subject('(Test) New Project Update');
+            });
+        }
+
+        return redirect()->route('admin.updates.index')
+            ->with('success', 'Test email sent to ' . implode(', ', $emails));
+    }
+
+    // Shows a screen to confirm sending bulk emails for a specific update
+
+    public function bulkEmailPreflight($id)
+    {
+        $update = Update::findOrFail($id);
+
+        $investorAccounts = Investments::where('project_id', $update->project_id)
+            ->with('account')
+            ->get()
+            ->pluck('account')
+            ->filter()
+            ->unique('email');
+
+        return view('admin.updates.bulk_email_preflight', compact('update', 'investorAccounts'));
     }
 
     // Function to send a test email

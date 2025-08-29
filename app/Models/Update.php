@@ -18,6 +18,7 @@ class Update extends Model
     protected $casts = [
         'category' => 'integer',
         'sent_on' => 'datetime',
+        'comment' => 'string'
     ];
 
     // Only return records with category = 3

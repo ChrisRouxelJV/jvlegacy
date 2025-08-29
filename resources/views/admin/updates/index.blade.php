@@ -57,6 +57,26 @@
     </script>
     @endpush
 
+    @if ($errors->any())
+        <div class="mb-4">
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                <ul class="list-disc pl-5 space-y-1">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    @endif
+
+    @if (session('success'))
+        <div class="mb-4">
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+                {{ session('success') }}
+            </div>
+        </div>
+    @endif
+
     <div>
         <form method="GET" class="mb-4 flex flex-wrap gap-4 items-end">
 
@@ -100,6 +120,7 @@
                 <th class="px-4 py-2">Category</th>
                 <th class="px-4 py-2">Title</th>
                 <th class="px-4 py-2">Sent</th>
+                <th class="px-4 py-2">Actions</th>
             </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
@@ -108,8 +129,18 @@
                     <td class="px-4 py-2 whitespace-nowrap">{{ $update->id }}</td>
                     <td class="px-4 py-2 whitespace-nowrap">{{ $update->project_id }} – {{ $update->project->name ?? '—' }}</td>
                     <td class="px-4 py-2 whitespace-nowrap">{{ $update->category }}</td>
-                    <td class="px-4 py-2 whitespace-nowrap">{{ $update->comment_preview }}</td>
+                    <td class="px-4 py-2 ">{{ $update->comment_preview }}</td>
                     <td class="px-4 py-2 whitespace-nowrap">{{ human_date($update->sent_on) }}</td>
+                    <td class="px-4 py-2 whitespace-nowrap">          
+                        <div class="flex flex-col gap-2 items-center">
+                            <a href="{{ route('admin.updates.bulk_email_preflight', $update->id) }}" class="px-3 py-1 text-xs rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1">Send Email</a>
+
+                            <form method="POST" action="{{ route('admin.updates.selective_email', $update->id) }}" class="inline">
+                                @csrf
+                                <button type="submit" class="px-3 text-xs rounded-md border border-gray-300 text-gray-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1">Test</button>
+                            </form>
+                        
+                    </td>
                 </tr>
             @empty
                 <tr>
