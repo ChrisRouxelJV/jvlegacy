@@ -38,8 +38,8 @@ class Investments extends Model
     public function getTypeLabelAttribute(): string
     {
         return match ($this->type) {
-            1 => 'Mezzanine',
-            2 => 'Debt',
+            1 => 'Debt',
+            2 => 'Mezzanine',
             default => 'Unknown',
         };
     }
