@@ -71,5 +71,7 @@ Route::prefix('investor')->name('investor.')->group(function () {
 
 Route::get('/updates/{id}', UpdateShowController::class)->name('updates.show');
 
+// Route for sending me a test email
+Route::get('/test-email', [UpdateController::class, 'sendTestEmail'])->name('test.email');
 
 require __DIR__.'/auth.php';

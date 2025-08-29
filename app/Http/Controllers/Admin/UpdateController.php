@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\Update;
 use App\Models\Investments;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
 class UpdateController extends Controller
@@ -80,7 +81,7 @@ class UpdateController extends Controller
         }
 
         foreach ($emails as $email) {
-            \Mail::send('emails.project_update', $mailData, function ($message) use ($email, $update) {
+            Mail::send('emails.project_update', $mailData, function ($message) use ($email, $update) {
                 $message->to($email)
                     ->subject('New Project Update');
             });
@@ -88,5 +89,21 @@ class UpdateController extends Controller
 
         return redirect()->route('admin.updates.index')
             ->with('success', 'Update posted and investors notified.');
+    }
+
+    // Function to send a test email
+    public function sendTestEmail()
+    {
+        $mailData = [
+            'content' => 'This is a test email.',
+            'url' => url('/investor/dashboard'),
+        ];
+
+        Mail::send('emails.project_update', $mailData, function ($message) {
+            $message->to('chris@jaevee.co.uk')
+                ->subject('Test Project Update');
+        });
+
+        return 'Test email sent.';
     }
 }
