@@ -131,7 +131,7 @@
                 <div>
                     <div class="mb-2 text-xs text-gray-500" x-text="update.sent_on"></div>
                     <div class="font-bold mb-2">Project Update</div>
-                    <div class="whitespace-pre-line" x-text="update.comment"></div>
+                    <div class="prose mb-2" x-html="update.comment"></div>
                 </div>
             </template>
         </div>
